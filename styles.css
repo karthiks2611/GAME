@@ -6,40 +6,35 @@ body {
   padding: 0;
 }
 
-header {
-  background-color: #000;
-  padding: 20px;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 #level-title {
   font-family: 'Press Start 2P', cursive;
   font-size: 2rem;
-  margin: 0;
-  color: #fff;
+  margin-bottom: 20px;
+  color: #000;
 }
 
-.container {
+.simon-board {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
+  gap: 20px;
+  max-width: 400px;
 }
 
 .btn {
-  display: block;
   height: 150px;
   width: 150px;
-  border: 10px solid #fff;
   border-radius: 50%;
   cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .green {
@@ -59,22 +54,6 @@ header {
 }
 
 .pressed {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transform: scale(0.95);
-  transition: box-shadow 0.1s ease, transform 0.1s ease;
-}
-
-/* Animations */
-
-@keyframes fadeInOut {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.fadeInOutAnimation {
-  animation: fadeInOut 1s ease;
+  transition: transform 0.1s ease;
 }
