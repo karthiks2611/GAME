@@ -23,10 +23,9 @@ body {
 
 .simon-board {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  max-width: 400px;
+  margin-bottom: 20px;
 }
 
 .btn {
@@ -61,7 +60,7 @@ body {
   transition: transform 0.1s ease;
 }
 
-/* Adding CSS for smaller screens and iPads using media queries */
+/* Add CSS for smaller screens and iPads using media queries */
 
 @media (max-width: 768px) {
   .btn {
@@ -70,7 +69,7 @@ body {
   }
 }
 
-/* Adding CSS for iPads */
+/* Add CSS for iPads */
 @media (min-width: 768px) and (max-width: 1024px) {
   .btn {
     height: 120px;
