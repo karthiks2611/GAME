@@ -44,15 +44,15 @@ function checkAnswer(currentLevel) {
   } else {
     playSound("wrong");
     $("body").addClass("game-over");
-    $("#level-title").text("Game Over, Press Any Key to Restart");
+    $("#level-title").text("Game Over");
+    $("#score").text(level - 1); // Display the score in the modal
 
     if (level - 1 > highScore) {
       highScore = level - 1;
     }
 
-    setTimeout(function () {
-      $("body").removeClass("game-over");
-    }, 200);
+    // Show the Game Over modal
+    $("#game-over-modal").css("display", "block");
 
     startOver();
   }
