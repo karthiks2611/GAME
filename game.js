@@ -12,7 +12,8 @@ let greenSound = new Audio("sounds/green.mp3");
 let yellowSound = new Audio("sounds/yellow.mp3");
 let wrongSound = new Audio("sounds/wrong.mp3");
 
-$(document).keypress(function() {
+// Start the game when the screen is touched on mobile devices
+$(document).on("click touchstart", function () {
   if (!started) {
     $("#level-title").text("Level " + level);
     nextSequence();
@@ -20,9 +21,9 @@ $(document).keypress(function() {
   }
 });
 
-$(".btn").on("click touchstart", function(event) {
-  event.preventDefault(); 
-  if (started && !$("#high-score-modal").is(":visible")) {
+$(".btn").on("click touchstart", function (event) {
+  event.preventDefault(); // Prevent the default behavior of the touch event
+  if (started) {
     let userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColour);
 
@@ -44,6 +45,10 @@ function checkAnswer(currentLevel) {
     playSound("wrong");
     $("body").addClass("game-over");
     $("#level-title").text("Game Over, Press Any Key to Restart");
+
+    if (level - 1 > highScore) {
+      highScore = level - 1;
+    }
 
     setTimeout(function () {
       $("body").removeClass("game-over");
