@@ -117,3 +117,8 @@ function startGame() {
   level = 0;
   started = false;
 }
+
+// Function to close the Game Over modal
+function closeModal() {
+  $("#game-over-modal").css("display", "none");
+}
