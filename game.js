@@ -23,7 +23,7 @@ $(document).on("click touchstart", function () {
 
 $(".btn").on("click touchstart", function (event) {
   event.preventDefault(); // Prevent the default behavior of the touch event
-  if (started) {
+  if (started && !$("#game-over-modal").is(":visible")) {
     let userChosenColour = $(this).attr("id");
     userClickedPattern.push(userChosenColour);
 
