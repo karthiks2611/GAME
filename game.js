@@ -104,3 +104,16 @@ function startOver() {
   gamePattern = [];
   started = false;
 }
+
+// Event listener for the "Restart" button in the Game Over modal
+$("#restart-btn").on("click", function () {
+  closeModal(); // Close the Game Over modal
+  startGame(); // Restart the game
+});
+
+function startGame() {
+  userClickedPattern = [];
+  gamePattern = [];
+  level = 0;
+  started = false;
+}
