@@ -30,6 +30,9 @@ body {
 }
 
 .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 150px;
   width: 150px;
   border-radius: 50%;
@@ -57,3 +60,22 @@ body {
   transform: scale(0.95);
   transition: transform 0.1s ease;
 }
+
+/* Add CSS for smaller screens and iPads using media queries */
+
+@media (max-width: 768px) {
+  .btn {
+    height: 100px;
+    width: 100px;
+  }
+}
+
+/* Add CSS for iPads */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .btn {
+    height: 120px;
+    width: 120px;
+  }
+}
+
+In this updated CSS code, we kep
