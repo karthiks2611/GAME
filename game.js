@@ -4,6 +4,7 @@ let userClickedPattern = [];
 
 let started = false;
 let level = 0;
+let highScore = 0;
 
 let redSound = new Audio("sounds/red.mp3");
 let blueSound = new Audio("sounds/blue.mp3");
@@ -19,14 +20,17 @@ $(document).keypress(function() {
   }
 });
 
-$(".btn").on("click touchstart", function() {
-  let userChosenColour = $(this).attr("id");
-  userClickedPattern.push(userChosenColour);
+$(".btn").on("click touchstart", function(event) {
+  event.preventDefault(); 
+  if (started && !$("#high-score-modal").is(":visible")) {
+    let userChosenColour = $(this).attr("id");
+    userClickedPattern.push(userChosenColour);
 
-  playSound(userChosenColour);
-  animatePress(userChosenColour);
+    playSound(userChosenColour);
+    animatePress(userChosenColour);
 
-  checkAnswer(userClickedPattern.length - 1);
+    checkAnswer(userClickedPattern.length - 1);
+  }
 });
 
 function checkAnswer(currentLevel) {
