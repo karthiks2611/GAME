@@ -112,6 +112,24 @@ body {
   margin-bottom: 20px;
 }
 
+.manual {
+  display: none;
+}
+
+.manual-button {
+  background-color: #4CAF50;
+  color: #fff;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
 .modal button {
   background-color: #4CAF50;
   color: #fff;
