@@ -24,7 +24,7 @@ $(document).ready(function () {
 
   $(".btn").on("click touchstart", function (event) {
     event.preventDefault(); // Prevent the default behavior of the touch event
-    if (started && !$("#game-over-modal").is(":visible")) {
+    if (started && !$("#game-over-modal").is(":visible") && !isPlayingSequence) {
       let userChosenColour = $(this).attr("id");
       userClickedPattern.push(userChosenColour);
 
@@ -46,7 +46,7 @@ $(document).ready(function () {
       playSound("wrong");
       $("body").addClass("game-over");
       $("#level-title").text("Game Over");
-      $("#score").text(level - 1); // Display the score in the modal
+      $("#score").text(level); // Display the score in the modal
 
       if (level - 1 > highScore) {
         highScore = level - 1;
@@ -55,72 +55,129 @@ $(document).ready(function () {
       // Show the Game Over modal
       $("#game-over-modal").css("display", "block");
 
+      // Stop the game from showing a sequence in the background
+      isPlayingSequence = false;
+
       startOver();
     }
   }
 
+  // Add a new variable to track whether the game is currently playing the sequence
+  let isPlayingSequence = false;
+
   function nextSequence() {
+    // Check if the manual is displayed, or if the game is over, or if a sequence is already playing
+    if (
+        $("#manual-modal").css("display") === "block" ||
+        $("#game-over-modal").css("display") === "block" ||
+        isPlayingSequence
+    ) {
+      return;
+    }
+
     userClickedPattern = [];
     level++;
     $("#level-title").text("Level " + level);
+
+    // Generate and add a new color to the game pattern
     let randomNumber = Math.floor(Math.random() * 4);
     let randomChosenColour = buttonColours[randomNumber];
     gamePattern.push(randomChosenColour);
 
-    $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
-    playSound(randomChosenColour);
+    // Set a flag to indicate that the sequence is being played
+    isPlayingSequence = true;
+
+    // Play the entire sequence
+    playSequence(0);
   }
 
-  function animatePress(currentColor) {
-    $("#" + currentColor).addClass("pressed");
-    setTimeout(function () {
-      $("#" + currentColor).removeClass("pressed");
-    }, 100);
-  }
 
-  function playSound(name) {
-    switch (name) {
-      case "red":
-        redSound.play();
-        break;
-      case "blue":
-        blueSound.play();
-        break;
-      case "green":
-        greenSound.play();
-        break;
-      case "yellow":
-        yellowSound.play();
-        break;
-      case "wrong":
-        wrongSound.play();
-        break;
-      default:
-        break;
+    function playSequence(index) {
+      if (index < gamePattern.length) {
+        setTimeout(function () {
+          let currentColor = gamePattern[index];
+          $("#" + currentColor).fadeIn(100).fadeOut(100).fadeIn(100);
+          playSound(currentColor);
+          playSequence(index + 1);
+        }, 500); // Reduced delay time to 500 milliseconds
+      } else {
+        // After playing the sequence, allow user input
+        isPlayingSequence = false;
+        $("#level-title").text("Your Turn");
+      }
     }
+
+
+    function animatePress(currentColor) {
+      $("#" + currentColor).addClass("pressed");
+      setTimeout(function () {
+        $("#" + currentColor).removeClass("pressed");
+      }, 100);
+    }
+
+    function playSound(name) {
+      switch (name) {
+        case "red":
+          redSound.play();
+          break;
+        case "blue":
+          blueSound.play();
+          break;
+        case "green":
+          greenSound.play();
+          break;
+        case "yellow":
+          yellowSound.play();
+          break;
+        case "wrong":
+          wrongSound.play();
+          break;
+        default:
+          break;
+      }
+    }
+
+    function startOver() {
+      level = 0;
+      gamePattern = [];
+      started = false;
+    }
+
+    // Event listener for the "Restart" button in the Game Over modal
+    $("#restart-btn").on("click", function () {
+      closeModal(); // Close the Game Over modal
+      initGame(); // Restart the game
+    });
+
+    function initGame() {
+      userClickedPattern = [];
+      gamePattern = [];
+      level = 0;
+      started = false;
+    }
+
+    // Function to close the Game Over modal
+    function closeModal() {
+      $("#game-over-modal").css("display", "none");
+    }
+
+  // Function to show the manual modal
+  function showManual() {
+    $("#manual-modal").css("display", "block");
   }
 
-  function startOver() {
-    level = 0;
-    gamePattern = [];
-    started = false;
+// Function to close the manual modal
+  function closeManual() {
+    $("#manual-modal").css("display", "none");
   }
 
-  // Event listener for the "Restart" button in the Game Over modal
-  $("#restart-btn").on("click", function () {
-    closeModal(); // Close the Game Over modal
-    startGame(); // Restart the game
+// Event listener for the "Show Manual" button
+  $("#manual-button").on("click", function () {
+    showManual();
   });
 
-  function startGame() {
-    userClickedPattern = [];
-    gamePattern = [];
-    level = 0;
-    started = false;
-  }
-
-  // Function to close the Game Over modal
-  function closeModal() {
-    $("#game-over-modal").css("display", "none");
-  }
+// Event listener for the "Close" button in the manual modal
+  $("#close-manual-btn").on("click", function () {
+    closeManual();
+  });
 });
