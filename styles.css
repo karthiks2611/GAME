@@ -168,3 +168,26 @@ body {
     width: 300px; /* Adjust width as needed */
   }
 }
+
+/* Add CSS for smaller screens and iPads using media queries */
+@media (max-width: 768px) {
+  /* Adjust the manual width and padding for smaller screens */
+  .modal-large {
+    width: 90%; /* Adjust the width as needed for smaller screens */
+    padding: 10px; /* Adjust the padding as needed for smaller screens */
+  }
+  /* Center the close button on smaller screens */
+  .close-button {
+    right: 5px;
+    top: 5px;
+  }
+  /* Modify the font size and spacing for smaller screens */
+  .modal-content h2 {
+    font-size: 1.5rem;
+    margin-top: 20px;
+  }
+  .modal-content p {
+    font-size: 1rem;
+    margin: 10px 0;
+  }
+}
